@@ -1,0 +1,78 @@
+# -------------------------
+# macOS system files
+# -------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+.Spotlight-V100
+.Trashes
+._*
+
+# -------------------------
+# Python
+# -------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+.eggs/
+*.manifest
+*.spec
+
+# Virtual environments
+.env/
+.venv/
+env/
+venv/
+python-environments/
+
+# Logs
+*.log
+
+# Byte-compiled / cache
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# -------------------------
+# Airflow
+# -------------------------
+airflow.db
+airflow-webserver.pid
+logs/
+*.pid
+unittests.cfg
+
+# -------------------------
+# Spark
+# -------------------------
+spark-warehouse/
+.metastore_db/
+derby.log
+
+# -------------------------
+# ClickHouse
+# -------------------------
+# (если разворачиваешь в контейнере — игнорируй данные)
+clickhouse-data/
+clickhouse-logs/
+
+# -------------------------
+# Docker
+# -------------------------
+*.pid
+*.sock
+*.seed
+*.swp
+docker-compose.override.yml
+
+# -------------------------
+# IDEs / Editors
+# -------------------------
+.vscode/
+.idea/
+*.iml
