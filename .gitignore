@@ -9,6 +9,7 @@ Icon
 .Trashes
 .gitignore.save
 ._*
+.env
 
 # -------------------------
 # Python
