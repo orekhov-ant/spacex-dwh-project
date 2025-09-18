@@ -163,6 +163,10 @@ services:
         hard: 262144
     # ↑ Рекомендуемые лимиты на количество открытых файлов — ClickHouse любит широкие лимиты
 
+    volumes:
+      - ./clickhouse/init:/docker-entrypoint-initdb.d
+      # ← init SQL сюда
+
     healthcheck:
       test: ["CMD", "clickhouse-client", "--query", "SELECT 1"]
       # ↑ Проверяем готовность встроенным клиентом: вернёт 0-код, когда сервер отвечает

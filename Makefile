@@ -117,3 +117,28 @@ ports:
 	@echo "ClickHouse HTTP:    http://127.0.0.1:8123"
 	@echo "PG data:            127.0.0.1:$(PG_DATA_PORT)"
 	@echo "PG airflow:         127.0.0.1:$(PG_AF_PORT)"
+
+# ===== ClickHouse и Postgres helpers =====
+ch-apply-sql:
+	# применить init-скрипт CH
+	docker exec -it clickhouse-dwh bash -lc 'clickhouse-client -n < /docker-entrypoint-initdb.d/01_schema.sql'
+
+ch-insert-test:
+	# добавить тестовую строку в dwh._init_ok
+	docker exec -it clickhouse-dwh clickhouse-client -q "INSERT INTO dwh._init_ok VALUES (now())"
+
+ch-check:
+	# быстрые проверки CH
+	docker exec -it clickhouse-dwh clickhouse-client -q "SHOW DATABASES"
+	docker exec -it clickhouse-dwh clickhouse-client -q "EXISTS TABLE dwh._init_ok"
+	docker exec -it clickhouse-dwh clickhouse-client -q "SELECT * FROM dwh._init_ok ORDER BY created_at DESC LIMIT 1"
+
+ch-shell:
+	# интерактивный клиент (выйти \q)
+	docker exec -it clickhouse-dwh clickhouse-client
+
+pg-apply-sql:
+	docker exec -it pg-data bash -lc 'psql -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -f /docker-entrypoint-initdb.d/01_schema.sql'
+
+pg-check:
+	docker exec -it pg-data bash -lc 'psql -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -c "\dn"'
