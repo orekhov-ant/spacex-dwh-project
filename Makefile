@@ -143,18 +143,3 @@ pg-apply-sql:
 pg-check:
 	docker exec -it pg-data bash -lc 'psql -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -c "\dn"'
 
-# ==== Python env (локальный) ====
-VENV_DIR := .venv
-
-venv:
-	python3 -m venv $(VENV_DIR)
-	$(VENV_DIR)/bin/pip install --upgrade pip
-	$(VENV_DIR)/bin/pip install -r requirements.txt
-
-extract:  ## тянуть SpaceX и писать в raw.launches
-	# Передаём .env-переменные как окружение (нужны POSTGRES_DATA_* и порт)
-	. $(ENV_FILE); \
-	$(VENV_DIR)/bin/python scripts/extract_spacex.py
-
-pg-raw-count:
-	docker exec -it pg-data bash -lc 'psql -U "$$POSTGRES_USER" -d "$$POSTGRES_DB" -c "SELECT count(*) AS rows FROM raw.launches;"'
